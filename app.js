@@ -212,7 +212,7 @@ function isDraw(){
       store = false;
     }
   });
-  console.log(store);
+  //   console.log(store);
   return store;
 }
 
@@ -336,7 +336,7 @@ function botPlayMedium(){
       potenPlacementArray.push(block);
     }
   }
-  console.log(potenPlacementArray);
+  //   console.log(potenPlacementArray);
   //update the array to a single num
   potenPlacementArray = potenPlacementArray[randomGameArrayNum(potenPlacementArray.length)];
   //array is updated
@@ -376,7 +376,7 @@ createTest();
 // Button hover breath animation
 document.addEventListener("mouseover", function(e){
   if(e.target.tagName === "BUTTON"){
-    console.log(e.target);
+    //     console.log(e.target);
     anime({
       targets: e.target,
       scale: [.97, .75],
