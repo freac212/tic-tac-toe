@@ -83,37 +83,40 @@ multiPlayerGame.addEventListener("click", function(e){
     element.innerHTML = "";
   });
   //reg 2 player game starts;
-  gameBody.addEventListener("click", function(e){
-    // = current players icon(which doesn't matter because we're going to be comparing ones and zeros)
-    if(e.target.classList[0] === "gamebox"){
-      if(e.target.innerHTML === ""){
-        // add the icon
-        e.target.innerHTML = game[`player${game.currentPlayer}Icon`];
-        anime({
-          targets: e.target.children,
-          rotate: '1turn',
-          duration: 2000,
-          loop: false,
-        });
-        game.gameArray[e.target.id] = game[`player${game.currentPlayer}Num`];
-        // Check if the player has won or draw
-        if(isDraw()) {
-          draw();
-        } else if (isWin()) {
-          // The current player has won, end the game.
-
-          gameOver();
-        } else {
-          // Change the player.. I.E. end turn
-          endTurn();
-        }
-      }
-    }
-  });
+  gameBody.addEventListener("click", twoPlayerGame);
 });
 
+// Yeah so, don't use anonymous event listeners.
+function twoPlayerGame(e){
+  // = current players icon(which doesn't matter because we're going to be comparing ones and zeros)
+  if(e.target.classList[0] === "gamebox"){
+    if(e.target.innerHTML === ""){
+      // add the icon
+      e.target.innerHTML = game[`player${game.currentPlayer}Icon`];
+      anime({
+        targets: e.target.children,
+        rotate: '1turn',
+        duration: 2000,
+        loop: false,
+      });
+      game.gameArray[e.target.id] = game[`player${game.currentPlayer}Num`];
+      // Check if the player has won or draw
+      if(isDraw()) {
+        draw();
+      } else if (isWin()) {
+        // The current player has won, end the game.
+
+        gameOver();
+      } else {
+        // Change the player.. I.E. end turn
+        endTurn();
+      }
+    }
+  }
+};
 
 botGame.addEventListener("click", function(e){
+  game.currentPlayer = 0; // FIX
   // let the game know this is a bot game.
   game.playingBotGame = true;
   //hide the player-checker
@@ -123,6 +126,7 @@ botGame.addEventListener("click", function(e){
     element.style.display = "flex";
     element.innerHTML = "";
   });
+  gameBody.removeEventListener("click", twoPlayerGame); // FIX
   //player 1 goes first; then bot,
   gameBody.addEventListener("click", botAndPlayerEvent);
 });
@@ -212,7 +216,7 @@ function isDraw(){
       store = false;
     }
   });
-  //   console.log(store);
+  console.log(store);
   return store;
 }
 
@@ -336,7 +340,7 @@ function botPlayMedium(){
       potenPlacementArray.push(block);
     }
   }
-  //   console.log(potenPlacementArray);
+  console.log(potenPlacementArray);
   //update the array to a single num
   potenPlacementArray = potenPlacementArray[randomGameArrayNum(potenPlacementArray.length)];
   //array is updated
@@ -376,7 +380,7 @@ createTest();
 // Button hover breath animation
 document.addEventListener("mouseover", function(e){
   if(e.target.tagName === "BUTTON"){
-    //     console.log(e.target);
+    console.log(e.target);
     anime({
       targets: e.target,
       scale: [.97, .75],
